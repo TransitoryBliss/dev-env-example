@@ -30,7 +30,15 @@
       # part of this config instead of the terminal emulator's own settings.
       # "gruvbox-dark", "catppuccin-mocha", or left out to change nothing.
       home.devEnv.terminalPalette = "catppuccin-mocha";
+
+      # Pi Session Manager: browse, search and resume agent sessions in a
+      # browser, at http://psm.localhost:8090 (needs proxy.enable below).
+      # home.devEnv.sessionManager.enable = true;
     };
+
+    # Local reverse proxy for web UIs in the machine, one hostname each on
+    # port 8090. `make vm/ssh` forwards that port.
+    # proxy.enable = true;
 
     timeZone = "Europe/Stockholm";
   };
