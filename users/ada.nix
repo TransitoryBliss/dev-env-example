@@ -41,6 +41,16 @@
       #   sopsFile = ../secrets.yaml;
       #   env.LINEAR_API_KEY = "linear_api_key";
       # };
+
+      # MCP servers for pi: everywhere, and per org (like git.overrides).
+      # `oauth = true` uses the callback port `make vm/ssh` forwards.
+      # home.devEnv.mcp = {
+      #   servers.context7.url = "https://mcp.context7.com/mcp";
+      #   scopes."github.com/acme-corp" = {
+      #     inheritGlobal = false;  # only acme-corp's servers in its repos
+      #     servers.notion = { url = "https://mcp.notion.com/mcp"; oauth = true; };
+      #   };
+      # };
     };
 
     # Local reverse proxy for web UIs in the machine, one hostname each on
