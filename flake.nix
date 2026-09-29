@@ -7,9 +7,14 @@
     # One entry per machine. Names are what you pass as HOST= to make.
     nixosConfigurations = {
       vm = dev-env.lib.mkHost {
-        system = "aarch64-linux"; # Apple Silicon; "x86_64-linux" on an Intel Mac
+        system = "aarch64-linux"; # Apple Silicon
         modules = [ ./users/ada.nix ./hosts/vm.nix ];
       };
+      # Parallels instead of UTM:
+      # parallels = dev-env.lib.mkHost {
+      #   system = "aarch64-linux";
+      #   modules = [ ./users/ada.nix ./hosts/parallels.nix ];
+      # };
       wsl = dev-env.lib.mkHost {
         system = "x86_64-linux";
         modules = [ ./users/ada.nix ./hosts/wsl.nix ];
