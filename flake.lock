@@ -12,11 +12,11 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1790709588,
-        "narHash": "sha256-l7/ZaDpcTGN1CbwQSMX6E0v6sHUb8/zdAWYf6JWmdR4=",
+        "lastModified": 1790774669,
+        "narHash": "sha256-Tgwc4FpeFVzYWVpdHLuizqvR+HGqlZ2RNDu/Z4AD7x4=",
         "owner": "TransitoryBliss",
         "repo": "dev-env",
-        "rev": "ae041eb62f207a81ccfc1826ad82ad6d45aab4e1",
+        "rev": "f36734e6edb2865c38eb934d9df726c8220dc59d",
         "type": "github"
       },
       "original": {

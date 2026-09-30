@@ -18,13 +18,15 @@ their machines.
 | `hosts/*.nix`       | Per-machine: platform, hostname, language flags              |
 | `nvim/`             | Neovim config (lazy.nvim, LSP, treesitter), linked to `~/.config/nvim` |
 | `herdr/config.toml` | herdr config, linked to `~/.config/herdr/config.toml`        |
-| `Makefile`          | Install and rebuild helpers                                  |
+| `Makefile`          | Your values (`NIXUSER`, `VM_HOST`), then `include dev-env.mk` |
+| `dev-env.mk`        | Install and rebuild helpers: a copy of the base's, don't edit (see [Updating the base](#updating-the-base)) |
 | `Makefile.local`    | Optional, not included: your additions, e.g. `PI_PACKAGES += some-pi-package@1.2.3` |
 
 ## First steps
 
 1. Fill in `users/ada.nix`. Rename it if you like, and update the imports in `flake.nix`.
-2. Set `NIXUSER ?=` in the `Makefile` to your username.
+2. Set `NIXUSER ?=` in the `Makefile` to your username, and `VM_HOST ?=` to the
+   `nixosConfigurations` entry `make` builds from the Mac by default.
 3. Keep the hosts you need in `hosts/` and `flake.nix`.
 
 `nvim/lazy-lock.json` is missing on purpose: Neovim writes it on its first start (see
@@ -215,6 +217,19 @@ restic-agent-sessions restore latest --host <old-host> --target /tmp/sessions-re
 rsync -a /tmp/sessions-restore/home/<you>/ ~/ && rm -rf /tmp/sessions-restore
 systemctl --user start restic-backups-agent-sessions.timer
 ```
+
+## Updating the base
+
+`make vm/update NIXADDR=<ip> INPUT=dev-env` (from the Mac) moves the `dev-env` input to its
+latest commit, and copies back both `flake.lock` and `dev-env.mk`: the make targets live in the
+base, and the copy here is replaced by the one in the input you just locked. Commit both.
+Inside a machine, the same is `nix flake update dev-env && make base/sync`.
+
+`dev-env.mk` is a plain file in this repo, not read from the flake input, because `make vm/*`
+runs on the Mac, which has no Nix. Don't edit it: `make base/check` (also run by `make check`)
+fails when it differs from the locked input's copy. Your own variables and targets go in the
+`Makefile` (before the `include`) or in `Makefile.local` (`PI_PACKAGES +=`, `PROXY_PORT`,
+`MCP_OAUTH_PORT`, `SSH_CMD`, extra targets).
 
 ## Developing the base
 

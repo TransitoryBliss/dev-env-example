@@ -15,10 +15,20 @@ through it.
 
 - **No real data.** Everything personal here is a placeholder: the SSH public key, account
   names, emails, `acme-corp`. Don't replace them with anyone's real values.
-- **Keep in sync with the template.** When `dev-env/templates/default` changes (new option,
-  renamed file, Makefile target), apply the same change here. The only intended differences
-  are the filled-in `users/ada.nix`, `NIXUSER ?= ada` in the `Makefile`, the renamed user
-  file in `flake.nix`, and the intro in `README.md`.
+- **Don't edit the synced files here.** Everything except the files kept by hand is
+  generated from `dev-env/templates/default` by `dev-env/templates/sync-example.sh`, which
+  swaps `users/me.nix` for `users/ada.nix` and sets `NIXUSER ?= ada` in the `Makefile`.
+  To change one of them, change the template in dev-env, then run from a dev-env checkout:
+
+  ```sh
+  templates/sync-example.sh ../dev-env-example          # write the example
+  templates/sync-example.sh ../dev-env-example --check  # only report drift
+  ```
+
+  Files kept by hand, which the script never touches: `README.md`, `AGENTS.md`,
+  `flake.lock` and `users/ada.nix`.
+- `dev-env.mk` is the dev-env base's copy, unchanged. `make base/check` compares it with the
+  locked `dev-env` input; after `nix flake update dev-env`, run the script again.
 - **Generic improvements go to dev-env**, not here.
 - `nvim/lazy-lock.json` is deliberately absent; Neovim writes it on first start.
 - Commit as `Robert Stenbom <7187639+TransitoryBliss@users.noreply.github.com>`.

@@ -15,6 +15,11 @@
       #   system = "aarch64-linux";
       #   modules = [ ./users/ada.nix ./hosts/parallels.nix ];
       # };
+      # VMware Fusion instead of UTM:
+      # vmware = dev-env.lib.mkHost {
+      #   system = "aarch64-linux";
+      #   modules = [ ./users/ada.nix ./hosts/vmware.nix ];
+      # };
       wsl = dev-env.lib.mkHost {
         system = "x86_64-linux";
         modules = [ ./users/ada.nix ./hosts/wsl.nix ];
